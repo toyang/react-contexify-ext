@@ -1,0 +1,69 @@
+{
+  "name": "react-contexify",
+  "version": "2.0.7",
+  "main": "lib/index.js",
+  "description": "Add contextmenu to your react component with ease",
+  "keywords": [
+    "react",
+    "context menu",
+    "react-component",
+    "menu",
+    "react-contextmenu",
+    "react-contexify"
+  ],
+  "scripts": {
+    "test": "jest --verbose",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/",
+    "prebuild": "npm run lint && npm run test",
+    "bundle": "webpack --output-filename=dist/ReactContexify.min.js --optimize-minimize",
+    "build": "NODE_ENV=production  npm run bundle && babel --ignore=__tests__ src -d lib",
+    "build:dev": "NODE_ENV=development npm run bundle && babel --ignore=__tests__ src -d lib",
+    "postbuild": "npm run style",
+    "prestyle": "sass src/scss/main.scss dist/ReactContexify.css",
+    "style": "postcss --use autoprefixer -b 'last 2 versions' < dist/ReactContexify.css | cssnano --no-reduceIdents > dist/ReactContexify.min.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fkhadra/react-contexify.git"
+  },
+  "author": "Fadi Khadra <fdkhadra@gmail.com> (https://github.com/fkhadra)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fkhadra/react-contexify/issues"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.0",
+    "babel-cli": "^6.11.4",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "cssnano": "^3.8.0",
+    "cssnano-cli": "^1.0.5",
+    "enzyme": "^2.8.2",
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^15.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
+    "jest": "^20.0.1",
+    "postcss": "^6.0.1",
+    "postcss-cli": "^4.0.0",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.3.0",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "webpack": "^2.4.1"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.9"
+  }
+}
