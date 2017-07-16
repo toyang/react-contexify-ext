@@ -159,7 +159,7 @@ class ContextMenu extends Component {
     );
   }
 
-  preShow = (event) => {
+  preShow = (e) => {
     e.stopPropagation();
     //eventManager.emit('hideAll');
     //this.refsFromProvider = refsFromProvider;
