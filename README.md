@@ -1,4 +1,4 @@
-# React-contexify [![Build Status](https://travis-ci.org/fkhadra/react-contexify.svg?branch=master)](https://travis-ci.org/fkhadra/react-contexify) [![npm](https://img.shields.io/npm/dt/react-contexify.svg)]() [![npm](https://img.shields.io/npm/v/react-contexify.svg)]() [![license](https://img.shields.io/github/license/fkhadra/react-contexify.svg?maxAge=2592000)]()
+# React-contexify-ext 
 
 Add a context menu to your react application with ease !
 
@@ -13,14 +13,14 @@ Add a context menu to your react application with ease !
 
 ## Demo
    
-Live demo [here](https://fkhadra.github.io/react-contexify/)   
+Live demo [here](https://github.com/toyang/react-contexify-ext/)   
 
 ## Installation
 
 ```
-$ yarn add react-contexify
+$ yarn add react-contexify-ext
 or
-$ npm install --save react-contexify
+$ npm install --save react-contexify-ext
 ```
 
 You also need to include the css file provided. Otherwise it wont work as expected. 
@@ -28,7 +28,7 @@ You also need to include the css file provided. Otherwise it wont work as expect
 ### Style Loader :
 
 ```javascript
-import 'react-contexify/dist/ReactContexify.min.css' 
+import 'react-contexify-ext/dist/ReactContexify.min.css' 
 ```
 
 ### 1998 Script tag : 
@@ -51,7 +51,7 @@ import 'react-contexify/dist/ReactContexify.min.css'
 ### Create your menu
 
 ```javascript
-import { ContextMenu, Item, Separator, IconFont } from 'react-contexify';
+import { ContextMenu, Item, Separator, IconFont } from 'react-contexify-ext';
 
 function onClick(targetNode, ref, data) {
     // targetNode refer to the html node on which the menu is triggered
@@ -85,7 +85,7 @@ const MyAwesomeMenu = () => (
 ### Define which component can display the menu
 
 ```javascript
-import { ContextMenuProvider, menuProvider } from 'react-contexify';
+import { ContextMenuProvider, menuProvider } from 'react-contexify-ext';
 
 //wrap your component with the `ContextMenuProvider`
 
@@ -125,7 +125,7 @@ ReactDOM.render(
 ## Add a context menu to a table
 
 ```javascript
-import { ContextMenuProvider } from 'react-contexify';
+import { ContextMenuProvider } from 'react-contexify-ext';
 
 //You need to use a tr as a render tag otherwise your browser console will bleed !
 const Tr = (props) => (
