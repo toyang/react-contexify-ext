@@ -33,7 +33,7 @@ class ContextMenu extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.pos = {
       x: 0,
       y: 0,
     };
@@ -90,20 +90,17 @@ class ContextMenu extends Component {
       height: this.menu.offsetHeight
     };
 
-    let { x, y } = this.state;
+    let { x, y } = this.pos;
 
     if ((x + menuSize.width) > browserSize.width) {
-      x -= ((x + menuSize.width) - browserSize.width);
+      this.pos.x -= ((x + menuSize.width) - browserSize.width);
     }
 
     if ((y + menuSize.height) > browserSize.height) {
-      y -= ((y + menuSize.height) - browserSize.height);
+      this.pos.y -= ((y + menuSize.height) - browserSize.height);
     }
 
-    this.setState({
-      x,
-      y
-    }, this.bindWindowEvent);
+    this.bindWindowEvent();
   }
 
   getMousePosition(e) {
@@ -132,17 +129,17 @@ class ContextMenu extends Component {
     return pos;
   }
 
-  getMenuItem() {
+  /*getMenuItem() {
     return React.Children.map(
       React.Children.toArray(this.props.children).filter(isValidElement),
       React.cloneElement,
     );
-  }
+  }*/
 
   getMenuStyle() {
     return {
-      left: this.state.x,
-      top: this.state.y + 1,
+      left: this.pos.x,
+      top: this.pos.y + 1,
       opacity: 1
     };
   }
@@ -164,12 +161,9 @@ class ContextMenu extends Component {
     //eventManager.emit('hideAll');
     //this.refsFromProvider = refsFromProvider;
 
-    const { x, y } = this.getMousePosition(e);
+    this.pos = this.getMousePosition(e);
 
-    this.setState({
-      x,
-      y,
-    }, this.setMenuPosition);
+    this.setMenuPosition();
   };
 
   render() {
@@ -182,7 +176,7 @@ class ContextMenu extends Component {
               onMouseLeave={this.onMouseLeave}
             >
               <div>
-                {this.getMenuItem()}
+                {this.props.children}
               </div>
             </div>);
   }
