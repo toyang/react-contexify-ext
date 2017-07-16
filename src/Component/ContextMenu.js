@@ -76,9 +76,15 @@ class ContextMenu extends Component {
     window.removeEventListener('scroll', this.props.onDestroyContextMenu);
   };
 
-  onMouseEnter = () => window.removeEventListener('mousedown', this.unBindWindowEvent);
+  onMouseEnter = () => {
+    window.removeEventListener('mousedown', this.props.onDestroyContextMenu);
+    return window.removeEventListener('mousedown', this.unBindWindowEvent);
+  };
 
-  onMouseLeave = () => window.addEventListener('mousedown', this.unBindWindowEvent);
+  onMouseLeave = () => {
+    window.addEventListener('mousedown', this.props.onDestroyContextMenu);
+    return window.addEventListener('mousedown', this.unBindWindowEvent);
+  }
 
   setRef = ref => {
     this.menu = ref;
