@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import cssClasses from './../cssClasses';
 
-class IconFont extends PureComponent {
+class IconFont extends Component {
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,

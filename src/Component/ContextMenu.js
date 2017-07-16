@@ -5,15 +5,14 @@ import cx from 'classnames';
 
 import Item from './Item';
 import cssClasses from './../cssClasses';
-import eventManager from '../util/eventManager';
 import childrenOfType from '../util/childrenOfType';
 
 class ContextMenu extends Component {
   static propTypes = {
-    id: PropTypes.oneOfType([
+    /*id: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
-    ]).isRequired,
+    ]).isRequired,*/
     children: childrenOfType(Item).isRequired,
     theme: PropTypes.string,
     animation: PropTypes.string
@@ -21,7 +20,7 @@ class ContextMenu extends Component {
 
   static defaultProps = {
     theme: null,
-    animation: null
+    animation: null,
   };
 
   static THEME = {
@@ -41,21 +40,19 @@ class ContextMenu extends Component {
     this.state = {
       x: 0,
       y: 0,
-      visible: false,
-      targetNode: null
     };
     this.menu = null;
-    this.refsFromProvider = null;
   }
 
   componentDidMount() {
-    eventManager.on(`display::${this.props.id}`, (e, refsFromProvider) => this.show(e, refsFromProvider));
-    eventManager.on('hideAll', this.hide);
+    //eventManager.on(`display::${this.props.id}`, (e, refsFromProvider) => this.show(e, refsFromProvider));
+    //eventManager.on('hideAll', this.hide);
   }
 
   componentWillUnmount() {
-    eventManager.off(`display::${this.props.id}`);
-    eventManager.off('hideAll');
+    //eventManager.off(`display::${this.props.id}`);
+    //eventManager.off('hideAll');
+    this.unBindWindowEvent();
   }
 
   bindWindowEvent = () => {
@@ -66,7 +63,11 @@ class ContextMenu extends Component {
     window.addEventListener('scroll', this.hide);
   };
 
-  unBindWindowEvent = () => {
+  unBindWindowEvent = (e) => {
+    // Firefox trigger a click event when you mouse up on contextmenu event
+    if (typeof e !== 'undefined' && e.button === 2 && e.type !== 'contextmenu') {
+      return;
+    }
     window.removeEventListener('resize', this.hide);
     window.removeEventListener('contextmenu', this.hide);
     window.removeEventListener('mousedown', this.hide);
@@ -74,18 +75,9 @@ class ContextMenu extends Component {
     window.removeEventListener('scroll', this.hide);
   };
 
-  onMouseEnter = () => window.removeEventListener('mousedown', this.hide);
+  onMouseEnter = () => window.removeEventListener('mousedown', this.unBindWindowEvent);
 
-  onMouseLeave = () => window.addEventListener('mousedown', this.hide);
-
-  hide = e => {
-    // Firefox trigger a click event when you mouse up on contextmenu event
-    if (typeof e !== 'undefined' && e.button === 2 && e.type !== 'contextmenu') {
-      return;
-    }
-    this.unBindWindowEvent();
-    this.setState({ visible: false });
-  };
+  onMouseLeave = () => window.addEventListener('mousedown', this.unBindWindowEvent);
 
   setRef = ref => {
     this.menu = ref;
@@ -144,15 +136,10 @@ class ContextMenu extends Component {
     return pos;
   }
 
-  cloneItem = item => React.cloneElement(item, {
-    targetNode: this.state.targetNode,
-    refsFromProvider: this.refsFromProvider
-  });
-
   getMenuItem() {
     return React.Children.map(
       React.Children.toArray(this.props.children).filter(isValidElement),
-      this.cloneItem,
+      React.cloneElement,
     );
   }
 
@@ -176,36 +163,32 @@ class ContextMenu extends Component {
     );
   }
 
-  show = (e, refsFromProvider) => {
+  preShow = (event) => {
     e.stopPropagation();
-    eventManager.emit('hideAll');
-    this.refsFromProvider = refsFromProvider;
+    //eventManager.emit('hideAll');
+    //this.refsFromProvider = refsFromProvider;
 
     const { x, y } = this.getMousePosition(e);
 
     this.setState({
-      visible: true,
       x,
       y,
-      targetNode: e.target
     }, this.setMenuPosition);
   };
 
   render() {
-    return this.state.visible
-      ?
-        <div
-          className={this.getMenuClasses()}
-          style={this.getMenuStyle()}
-          ref={this.setRef}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-        >
-          <div>
-            {this.getMenuItem()}
-          </div>
-        </div>
-      : null;
+    this.preShow(this.props.event);
+    return (<div
+              className={this.getMenuClasses()}
+              style={this.getMenuStyle()}
+              ref={this.setRef}
+              onMouseEnter={this.onMouseEnter}
+              onMouseLeave={this.onMouseLeave}
+            >
+              <div>
+                {this.getMenuItem()}
+              </div>
+            </div>);
   }
 }
 
