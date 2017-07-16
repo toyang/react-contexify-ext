@@ -1,4 +1,3 @@
-/* global: window */
 import React, { Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -8,15 +7,12 @@ import cssClasses from './../cssClasses';
 import childrenOfType from '../util/childrenOfType';
 
 class ContextMenu extends Component {
+
   static propTypes = {
-    /*id: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]).isRequired,*/
     children: childrenOfType(Item).isRequired,
     theme: PropTypes.string,
     animation: PropTypes.string
-  };
+  }
 
   static defaultProps = {
     theme: null,
