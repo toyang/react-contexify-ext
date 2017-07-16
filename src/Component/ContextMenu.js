@@ -33,6 +33,9 @@ class ContextMenu extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      visible: false
+    };
     this.pos = {
       x: 0,
       y: 0,
@@ -43,6 +46,7 @@ class ContextMenu extends Component {
   componentDidMount() {
     //eventManager.on(`display::${this.props.id}`, (e, refsFromProvider) => this.show(e, refsFromProvider));
     //eventManager.on('hideAll', this.hide);
+    this.show(this.props.event);
   }
 
   componentWillUnmount() {
@@ -156,29 +160,33 @@ class ContextMenu extends Component {
     );
   }
 
-  preShow = (e) => {
+  show = (e) => {
     e.stopPropagation();
     //eventManager.emit('hideAll');
     //this.refsFromProvider = refsFromProvider;
 
     this.pos = this.getMousePosition(e);
-
-    this.setMenuPosition();
+    this.setState({
+      visible: true,
+    }, this.setMenuPosition);
   };
 
   render() {
-    this.preShow(this.props.event);
-    return (<div
-              className={this.getMenuClasses()}
-              style={this.getMenuStyle()}
-              ref={this.setRef}
-              onMouseEnter={this.onMouseEnter}
-              onMouseLeave={this.onMouseLeave}
-            >
-              <div>
-                {this.props.children}
-              </div>
-            </div>);
+    
+    return this.state.visible
+      ?
+        <div
+          className={this.getMenuClasses()}
+          style={this.getMenuStyle()}
+          ref={this.setRef}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+        >
+          <div>
+            {this.getMenuItem()}
+          </div>
+        </div>
+      : null;
   }
 }
 
