@@ -56,11 +56,11 @@ class ContextMenu extends Component {
   }
 
   bindWindowEvent = () => {
-    window.addEventListener('resize', this.hide);
-    window.addEventListener('contextmenu', this.hide);
-    window.addEventListener('mousedown', this.hide);
-    window.addEventListener('click', this.hide);
-    window.addEventListener('scroll', this.hide);
+    window.addEventListener('resize', this.props.onDestroyContextMenu);
+    window.addEventListener('contextmenu', this.props.onDestroyContextMenu);
+    window.addEventListener('mousedown', this.props.onDestroyContextMenu);
+    window.addEventListener('click', this.props.onDestroyContextMenu);
+    window.addEventListener('scroll', this.props.onDestroyContextMenu);
   };
 
   unBindWindowEvent = (e) => {
@@ -68,11 +68,11 @@ class ContextMenu extends Component {
     if (typeof e !== 'undefined' && e.button === 2 && e.type !== 'contextmenu') {
       return;
     }
-    window.removeEventListener('resize', this.hide);
-    window.removeEventListener('contextmenu', this.hide);
-    window.removeEventListener('mousedown', this.hide);
-    window.removeEventListener('click', this.hide);
-    window.removeEventListener('scroll', this.hide);
+    window.removeEventListener('resize', this.props.onDestroyContextMenu);
+    window.removeEventListener('contextmenu', this.props.onDestroyContextMenu);
+    window.removeEventListener('mousedown', this.props.onDestroyContextMenu);
+    window.removeEventListener('click', this.props.onDestroyContextMenu);
+    window.removeEventListener('scroll', this.props.onDestroyContextMenu);
   };
 
   onMouseEnter = () => window.removeEventListener('mousedown', this.unBindWindowEvent);
