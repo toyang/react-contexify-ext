@@ -183,7 +183,7 @@ class ContextMenu extends Component {
           onMouseLeave={this.onMouseLeave}
         >
           <div>
-            {this.getMenuItem()}
+            {this.props.children}
           </div>
         </div>
       : null;
