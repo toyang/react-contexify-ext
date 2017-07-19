@@ -4,8 +4,11 @@
   user-select: none;
   background-color: #ffffff;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, .3) 0 10px 20px, rgb(238, 238, 238) 0 0 0 1px;
-  padding: 5px 0;
+  box-shadow: 2px 2px 5px #bdb5b5;
+  padding: 1px;
+  border: 1px solid #bdb5b5;
+  font-family:'微软雅黑','Open Sans', Arial, sans-serif;
+  font-size: 12px;
 
   &__separator {
     float: left;
@@ -29,8 +32,8 @@
       opacity: .5;
     }
     &__data {
-      min-width: 140px;
-      padding: 6px 12px;
+      min-width: 130px;
+      padding: 6px 10px 6px 15px;
       display: inline-block;
       text-align: left;
       white-space: nowrap;

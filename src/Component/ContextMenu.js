@@ -102,13 +102,15 @@ class ContextMenu extends Component {
     };
 
     let { x, y } = this.state.pos;
-
+    let offset = 5;
     if ((x + menuSize.width) > browserSize.width) {
       x -= ((x + menuSize.width) - browserSize.width);
+      x -= offset;
     }
 
     if ((y + menuSize.height) > browserSize.height) {
       y -= ((y + menuSize.height) - browserSize.height);
+      y -= offset;
     }
 
     this.bindWindowEvent();
