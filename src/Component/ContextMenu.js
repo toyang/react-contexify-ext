@@ -34,11 +34,11 @@ class ContextMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
-    };
-    this.pos = {
-      x: 0,
-      y: 0,
+      visible: false,
+      pos: {
+        x: 0,
+        y: 0,
+      },
     };
     this.menu = null;
   }
@@ -101,17 +101,18 @@ class ContextMenu extends Component {
       height: this.menu.offsetHeight
     };
 
-    let { x, y } = this.pos;
+    let { x, y } = this.state.pos;
 
     if ((x + menuSize.width) > browserSize.width) {
-      this.pos.x -= ((x + menuSize.width) - browserSize.width);
+      x -= ((x + menuSize.width) - browserSize.width);
     }
 
     if ((y + menuSize.height) > browserSize.height) {
-      this.pos.y -= ((y + menuSize.height) - browserSize.height);
+      y -= ((y + menuSize.height) - browserSize.height);
     }
 
     this.bindWindowEvent();
+    this.setState({pos: {x: x, y: y}});
   }
 
   getMousePosition(e) {
@@ -149,8 +150,8 @@ class ContextMenu extends Component {
 
   getMenuStyle() {
     return {
-      left: this.pos.x,
-      top: this.pos.y + 1,
+      left: this.state.pos.x,
+      top: this.state.pos.y + 1,
       opacity: 1
     };
   }
@@ -172,14 +173,15 @@ class ContextMenu extends Component {
     //eventManager.emit('hideAll');
     //this.refsFromProvider = refsFromProvider;
 
-    this.pos = this.getMousePosition(e);
+    let pos = this.getMousePosition(e);
     this.setState({
       visible: true,
+      pos: pos,
     }, this.setMenuPosition);
   };
 
   render() {
-    
+
     return this.state.visible
       ?
         <div
